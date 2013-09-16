@@ -1,14 +1,21 @@
-from django.http import HttpResponse
-from django.template import RequestContext, loader
+from django.shortcuts import render
+from django.http import Http404
 
 from app.models import List
 
 
 def index(request):
     lists = List.objects.all()
-    template = loader.get_template('app/index.html')
-    context = RequestContext(request, {
-        'lists': lists,
-    })
+    context = {'lists': lists}
 
-    return HttpResponse(template.render(context))
+    return render(request, 'app/index.html', context)
+
+
+def detail(request, list_id):
+    try:
+        list = List.objects.get(id=list_id)
+    except List.DoesNotExist:
+        raise Http404
+
+    return render(request, 'app/detail.html', {'list': list})
+

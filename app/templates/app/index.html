@@ -1,16 +1,61 @@
-{% extends 'app/base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico">
 
-{% block content %}
-<div class="main-listing">
-<h1>Lists</h1>
-{% if lists %}
-    <ul>
-        {% for list in lists %}
-        <li><a href="/show/{{ list.id }}">{{ list.title }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    No lists
-{% endif %}
+    <title>{% block title %}{% endblock %} - didit</title>
+
+    <link href="{% static 'app/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'app/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'app/css/application.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static 'app/js/html5shiv.js' %}"></script>
+      <script src="{% static 'app/js/respond.min.js' %}"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'index' %}">didit</a>
+        </div>
+    </div>
 </div>
-{% endblock %}
+
+<div class="container">
+    <div class="col-md-3">
+        <ul id="app-menu" class="main-list nav nav-pills nav-stacked">
+            {% if lists %}
+                {% for list in lists %}
+                    <li><a data-id="{{ list.id }}" href="{% url 'detail' list.id %}">{{ list.title }}</a></li>
+                {% endfor %}
+            {% else %}
+                <li>No lists</li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-md-9" id="app-container">
+
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'app/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/js/underscore.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/js/backbone.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/js/application.js' %}"></script>
+<script type="text/javascript">
+    $(function () {
+        window.didit = new DiditApp('{% url 'detail' '__' %}');
+    });
+</script>
+
+</body>
+</html>
