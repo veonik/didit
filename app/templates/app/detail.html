@@ -1,1 +1,14 @@
-{{ list.title }}
+<div class="list-body">
+    <h1>{{ list.title }}</h1>
+    <ul class="nav nav-list">
+    {% for item in list.choice_set.all %}
+        <li class="list-item">
+            <div class="item-title">{{ item.title }}</div>
+            <div class="item-description">{{ item.description }}</div>
+        </li>
+    {% endfor %}
+        <li>
+            <a href="#"><i class="icon-plus"></i> Create a new Item</a>
+        </li>
+    </ul>
+</div>

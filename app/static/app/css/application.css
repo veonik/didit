@@ -3,5 +3,9 @@ body {
 }
 
 .main-list {
-    padding-top: 50px
+    margin-top: 50px;
+}
+
+.list-body h1 {
+    font-size: 26px;
 }

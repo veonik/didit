@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/favicon.ico">
 
-    <title>{% block title %}{% endblock %} - didit</title>
+    <title>didit</title>
 
     <link href="{% static 'app/css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'app/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'app/css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'app/css/application.css' %}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,18 +32,17 @@
 
 <div class="container">
     <div class="col-md-3">
-        <ul id="app-menu" class="main-list nav nav-pills nav-stacked">
-            {% if lists %}
-                {% for list in lists %}
-                    <li><a data-id="{{ list.id }}" href="{% url 'detail' list.id %}">{{ list.title }}</a></li>
-                {% endfor %}
-            {% else %}
-                <li>No lists</li>
-            {% endif %}
+        <ul id="app-menu" class="main-list nav nav-list">
+        {% for list in lists %}
+            <li class="list-item"><a data-id="{{ list.id }}" href="{% url 'detail' list.id %}">{{ list.title }}</a></li>
+        {% endfor %}
+            <li><a href="#"><i class="icon-plus"></i> Create a List</a></li>
         </ul>
     </div>
     <div class="col-md-9" id="app-container">
-
+        <div class="list-body">
+            <h1>Select a list.</h1>
+        </div>
     </div>
 </div>
 
