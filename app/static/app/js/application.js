@@ -47,4 +47,28 @@
     };
 
     window.DiditApp = didit;
+
+    var mdToHtml = window.markdown.toHTML;
+    window.markdown = {
+        toHTML: function(content) {
+            var lines = content.split('\n');
+
+            var converted = [];
+
+            lines.forEach(function(line) {
+                if (line.length > 0) {
+                    if (line.charAt(0) === '[') {
+                        var checked = line.charAt(1) === 'x';
+
+                        line = line.substr(3);
+                        converted.push('<input type="checkbox" ' + (checked ? ' checked="checked"' : '') + '> ');
+                    }
+
+                    converted.push(mdToHtml(line));
+                }
+            });
+
+            return converted.join('\n');
+        }
+    }
 })(jQuery, this);
