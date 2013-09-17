@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 
@@ -16,7 +17,7 @@ def detail(request, list_id):
 
     return render(request, 'app/detail.html', {'list': list})
 
-
+@csrf_exempt
 def create_list(request):
     list = List(title=request.POST['title'])
     list.save()
@@ -24,15 +25,13 @@ def create_list(request):
     return HttpResponse('List created')
 
 
-def create_item(request, list_id):
+def update_list(request, list_id):
     list = get_object_or_404(List, pk=list_id)
-    ticket = list.ticket_set.create(title=request.POST['title'], description=request.POST['description'])
-    ticket.save()
 
     return HttpResponse()
 
 
-def close_item(request, list_id, item_id):
+def update_item(request, list_id, item_id):
     list = get_object_or_404(List, pk=list_id)
 
     return HttpResponse()

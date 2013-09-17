@@ -4,13 +4,13 @@
         this.$container = $(document.getElementById('app-container'));
         this.$menu      = $(document.getElementById('app-menu'));
 
-        this.$newListTemplate = $(document.getElementById('new-list-template'));
+        this.$formTemplate = $(document.getElementById('form-template'));
 
         var that = this;
         this.$menu.on('click', '.list-item a', function(e) {
             e.preventDefault();
 
-            that.select($(this).data('id'));
+            that.select(this);
         });
 
         this.$menu.on('click', '.create-list a', function(e) {
@@ -20,12 +20,14 @@
         })
     };
 
-    didit.prototype.select = function(id) {
-        this.$container.load(this.loadUrl.replace('__', id));
+    didit.prototype.select = function(listItem) {
+        this.$container.load($(listItem).attr('href'));
     };
 
     didit.prototype.newList = function() {
-        var $content = $(this.$newListTemplate.html());
+        var $content = $(this.$formTemplate.html());
+
+        $content.find('textarea').markdown();
 
         $content.find('form').on('submit', function(e) {
             e.preventDefault();
